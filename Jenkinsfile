@@ -22,6 +22,16 @@ pipeline {
                 sh(script: 'docker compose up -d')
             }
         }
+            stages {
+        stage('Test') {
+            steps {
+                sh '''
+                    export PATH="/Library/Frameworks/Python.framework/Versions/3.10/bin:$PATH"
+                    pytest ./tests/test_sample.py
+                '''
+            }
+        }
+    }
         stage('Run Tests') {
             steps {
                 // Run tests using pytest
