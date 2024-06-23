@@ -23,7 +23,6 @@ pipeline {
             }
         }
 
-        stages {
             stage('Test') {
                 steps {
                     sh '''
@@ -32,7 +31,6 @@ pipeline {
                     '''
                 }
             }
-        }
         
         stage('Run Tests') {
             steps {
