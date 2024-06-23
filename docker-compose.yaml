@@ -4,7 +4,7 @@ services:
     # Chip amd64
     #image: mcr.microsoft.com/oss/bitnami/redis:6.0.8
     # Chip arm64
-    image: mcr.microsoft.com/oss/bitnami/redis:6.0.8-debian-10-r0
+    image: redis:6.2
     container_name: azure-vote-back
     environment:
       ALLOW_EMPTY_PASSWORD: "yes"
