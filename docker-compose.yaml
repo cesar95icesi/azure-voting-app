@@ -14,6 +14,8 @@ services:
   azure-vote-front:
     build: ./azure-vote
     image: mcr.microsoft.com/azuredocs/azure-vote-front:v1
+    # Para emular la arquitectura amd64 en un sistema arm64
+    platform: linux/amd64
     container_name: azure-vote-front
     environment:
       REDIS: azure-vote-back
