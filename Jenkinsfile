@@ -23,14 +23,14 @@ pipeline {
             }
         }
 
-            stage('Test') {
-                steps {
-                    sh '''
-                        export PATH="/Library/Frameworks/Python.framework/Versions/3.10/bin:$PATH"
-                        pytest ./tests/test_sample.py
-                    '''
-                }
-            }
+            // stage('Test') {
+            //     steps {
+            //         sh '''
+            //             export PATH="/Library/Frameworks/Python.framework/Versions/3.10/bin:$PATH"
+            //             pytest ./tests/test_sample.py
+            //         '''
+            //     }
+            // }
         
         stage('Run Tests') {
             steps {
