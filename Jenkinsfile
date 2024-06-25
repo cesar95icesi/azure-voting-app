@@ -46,7 +46,7 @@ pipeline {
             dir("$WORKSPACE/azure-vote") {
                script {
                   docker.withRegistry('', 'dockerhub') {
-                     def image = docker.build('cesarc95/jenkins-masterclass:2024')
+                    def image = docker.build("cesarc95/jenkins-masterclass:${new Date().format('yyyyMMdd-HHmmss')}")
                      image.push()
                   }
                }
