@@ -58,19 +58,6 @@ pipeline {
             }
         }
 
-        stage('Docker Push') {
-         steps {
-            echo "Runnning in $WORKSPACE"
-            dir("$WORKSPACE/azure-vote") {
-               script {
-                  docker.withRegistry('', 'dockerhub') {
-                    def image = docker.build("cesarc95/jenkins-masterclass:${new Date().format('yyyyMMdd-HHmmss')}")
-                     image.push()
-                  }
-               }
-            }
-         }
-      }
     }
     /**
      * This Jenkinsfile defines the pipeline for the Azure Voting App with Redis.
