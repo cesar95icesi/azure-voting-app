@@ -40,6 +40,24 @@ pipeline {
             }
         }
 
+        stage('Run Clair') {
+            agent {label 'build-2'}
+            steps {
+                // Run Clair scan on the Docker images
+                //sh(script: 'docker scan cesarc95/jenkins-masterclass:latest')
+                sh(script: 'docker run -p 5432:5432 -d --name db --platform linux/amd64 arminc/clair-db:latest')
+                sh(script: 'docker run -p 6060:6060 --link db:postgres -d --name clair --platform linux/amd64 arminc/clair-local-scan:latest')
+
+            }
+        }   
+
+        stage('Run Clair Scan'){
+            agent {label 'build-2'}
+            steps {
+                sh(script: '/Users/cesar/clair-scanner --ip=192.168.68.107 cesarc95/jenkins-masterclass:20240624-222837')
+            }
+        }
+
         stage('Docker Push') {
          steps {
             echo "Runnning in $WORKSPACE"
