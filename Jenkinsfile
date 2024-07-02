@@ -41,7 +41,7 @@ pipeline {
         }
 
         stage('Run Clair') {
-            agent {label 'build-2'}
+            agent {label 'principal'}
             steps {
                 // Run Clair scan on the Docker images
                 //sh(script: 'docker scan cesarc95/jenkins-masterclass:latest')
@@ -52,7 +52,7 @@ pipeline {
         }   
 
         stage('Run Clair Scan'){
-            agent {label 'build-2'}
+            agent {label 'principal'}
             steps {
                 sh(script: '/Users/cesar/clair-scanner --ip=192.168.68.107 cesarc95/jenkins-masterclass:20240624-222837')
             }
