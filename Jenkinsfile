@@ -45,14 +45,14 @@ pipeline {
         // se busca automatizar el proceso de identificación de vulnerabilidades 
         // conocidas en las dependencias y paquetes de software utilizados, 
         // mejorando así la seguridad del software desarrollado.
-        stage('Run Grype ') {
+        stage('Run Grype') {
             agent {label 'principal'}
             steps {
                 // Run Grype scan on the Docker images
                 grypeScan autoInstall: false, repName: 'grypeReport_${JOB_NAME}_${BUILD_NUMBER}.txt', scanDest: 'registry:cesarc95/jenkins-masterclass:20240624-222837'
             }
             post{
-                always{
+                always {
                     recordIssues(
                         tools: [grype()], 
                         aggregatingResults: true,
