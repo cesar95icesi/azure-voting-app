@@ -45,7 +45,7 @@ pipeline {
         // se busca automatizar el proceso de identificación de vulnerabilidades 
         // conocidas en las dependencias y paquetes de software utilizados, 
         // mejorando así la seguridad del software desarrollado.
-        stage('Run Grype') {
+        stage('Run Grype ') {
             agent {label 'principal'}
             steps {
                 // Run Grype scan on the Docker images
