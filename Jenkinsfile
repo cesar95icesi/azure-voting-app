@@ -100,10 +100,10 @@ pipeline {
      * It includes a post-build step that stops and removes the application containers using Docker Compose.
      */
 
-    post {
+    /* post {
         always {
             // Stop and remove the application containers using Docker Compose
             sh(script: 'docker compose down')
         }
-    }
+    } */
 }
