@@ -39,23 +39,27 @@ pipeline {
                 }
             }
         }
-
-        stage('Run Clair') {
+        // grype es una herramienta de escaneo de vulnerabilidades 
+        // diseñada para encontrar vulnerabilidades en contenedores y 
+        // aplicaciones empaquetadas. Al integrar grype en un Jenkinsfile, 
+        // se busca automatizar el proceso de identificación de vulnerabilidades 
+        // conocidas en las dependencias y paquetes de software utilizados, 
+        // mejorando así la seguridad del software desarrollado.
+        stage('Run Grype') {
             agent {label 'principal'}
             steps {
-                // Run Clair scan on the Docker images
-                //sh(script: 'docker scan cesarc95/jenkins-masterclass:latest')
-                sh(script: 'docker run -p 5432:5432 -d --name db --platform linux/amd64 arminc/clair-db:latest')
-                sh(script: 'docker run -p 6060:6060 --link db:postgres -d --name clair --platform linux/amd64 arminc/clair-local-scan:latest')
-
+                // Run Grype scan on the Docker images
+                sh(script: 'grypeScan autoInstall: false, repName: 'grypeReport_${JOB_NAME}_${BUILD_NUMBER}.txt', scanDest: 'registry:cesarc95/jenkins-masterclass:20240624-222837'')
             }
-        }   
-
-        stage('Run Clair Scan'){
-            agent {label 'principal'}
-            steps {
-                sh(script: '/Users/cesar/clair-scanner/clair-scanner --ip=192.168.68.107 cesarc95/jenkins-masterclass:20240624-222837')
+            post{
+                always{
+                    recordIssues(
+                        tools: [grype()], 
+                        aggregatingResults: true,
+                    )
+                }
             }
+            
         }
 
     }
