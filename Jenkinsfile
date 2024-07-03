@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Verify Branch') {
             steps {
-                echo "$GIT_BRANCH"
+                echo "$GIT_BRANCH :D"
             }
         }
         stage('Docker Build') {
             steps {
-                sh(script: 'docker compose build WH :D')
+                sh(script: 'docker compose build')
             }
         }
     }
