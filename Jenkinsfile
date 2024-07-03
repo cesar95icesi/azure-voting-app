@@ -51,20 +51,11 @@ pipeline {
                 // Run Grype scan on the Docker images
                 grypeScan autoInstall: false, repName: 'grypeReport_${JOB_NAME}_${BUILD_NUMBER}.txt', scanDest: 'registry:cesarc95/jenkins-masterclass:20240624-222837'
             }
-            post {
+            post{
                 always {
-                    sh """
-                    # Reemplaza 'registry:cesarc95/jenkins-masterclass:20240624-222837' con tu objetivo de escaneo real
-                    grype registry:cesarc95/jenkins-masterclass:20240624-222837 > grype-results.txt
-                    """
                     recordIssues(
-                        enabledForFailure: true, 
-                        tool: genericIssueParser(
-                            pattern: 'grype-results.txt', 
-                            id: 'grype-vulnerabilities',
-                            name: 'Grype Vulnerabilities'
-                        ),
-                        aggregatingResults: true
+                        tools: [grype()], 
+                        aggregatingResults: true,
                     )
                 }
             }
