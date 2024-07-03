@@ -51,15 +51,25 @@ pipeline {
                 // Run Grype scan on the Docker images
                 grypeScan autoInstall: false, repName: 'grypeReport_${JOB_NAME}_${BUILD_NUMBER}.txt', scanDest: 'registry:cesarc95/jenkins-masterclass:20240624-222837'
             }
-            post{
+            post {
                 always {
+                    sh """
+                    # Asegúrate de ajustar el comando según tu caso de uso específico
+                    grype <tu_objetivo_de_escaneo> > grype-results.txt
+                    """
+                    // Aquí asumimos que necesitas un paso adicional para procesar y registrar los problemas
+                    // Esto podría requerir un script personalizado o un paso adicional dependiendo de tu configuración
                     recordIssues(
-                        tools: [grype()], 
-                        aggregatingResults: true,
+                        enabledForFailure: true, 
+                        tool: genericIssueParser(
+                            pattern: 'grypeReport_${JOB_NAME}_${BUILD_NUMBER}.txt', 
+                            id: 'grype-vulnerabilities',
+                            name: 'Grype Vulnerabilities'
+                        ),
+                        aggregatingResults: true
                     )
                 }
             }
-            
         }
 
     }
