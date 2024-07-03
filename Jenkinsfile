@@ -49,7 +49,7 @@ pipeline {
             agent {label 'principal'}
             steps {
                 // Run Grype scan on the Docker images
-                sh(script: 'grypeScan autoInstall: false, repName: 'grypeReport_${JOB_NAME}_${BUILD_NUMBER}.txt', scanDest: 'registry:cesarc95/jenkins-masterclass:20240624-222837'')
+                grypeScan autoInstall: false, repName: 'grypeReport_${JOB_NAME}_${BUILD_NUMBER}.txt', scanDest: 'registry:cesarc95/jenkins-masterclass:20240624-222837'
             }
             post{
                 always{
